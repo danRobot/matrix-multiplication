@@ -1,0 +1,15 @@
+import numpy as np
+import time as t
+
+mat_a=np.random.randn(2000,2000)*10
+#mat_a=mat_a.astype(np.int64)
+mat_b=np.random.randn(2000,1200)*10
+#mat_b=mat_b.astype(np.int64)
+start=t.time()
+mat_c=np.matmul(mat_a,mat_b)
+end=t.time()
+
+np.savetxt('src/aux_py/matrix_a.txt',mat_a)
+np.savetxt('src/aux_py/matrix_b.txt',mat_b)
+np.savetxt('src/aux_py/matrix_c.txt',mat_c)
+print(end-start)
