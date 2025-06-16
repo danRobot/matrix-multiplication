@@ -6,7 +6,14 @@
 
 using namespace std;
 
-resultado matrix_multiplication(vector<vector<double>>a,vector<vector<double>>b);
-resultado matrix_multiplication(basic_matrix a,basic_matrix b);
+template<typename T>
+resultado<T> matrix_multiplication(vector<vector<T>>a,vector<vector<T>>b);
+template<typename T>
+resultado<T> matrix_multiplication_1d(vector<vector<T>>a,vector<vector<T>>b);
+template<typename T>
+resultado<T> matrix_multiplication(basic_matrix<T>a,basic_matrix<T>b);
+template<typename T>
+resultado<T> matrix_multiplication_1d(basic_matrix<T>a,basic_matrix<T>b);
+
 
 #endif // MACRO

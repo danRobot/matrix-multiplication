@@ -15,8 +15,9 @@ vector<string> split(string& s, const string& delimiter) {
     return tokens;
 }
 
-vector<vector<double>>read_matrix(string path){
-    vector<vector<double>>matrix;
+template<typename T>
+vector<vector<T>>read_matrix(string path){
+    vector<vector<T>>matrix;
     ifstream input_file(path);
     if (!input_file.is_open()) {
         cerr << "Error opening file: " << strerror(errno) << ' '<<path<<endl;
@@ -26,11 +27,11 @@ vector<vector<double>>read_matrix(string path){
     int i=0;
     while (getline(input_file,linea))
     {
-        vector<double> m;
+        vector<T> m;
         matrix.push_back(m);
         vector<string> numeros=split(linea," ");
         for (auto &&numero : numeros){
-            double n=stod(numero);
+            T n=stod(numero);
             matrix[i].push_back(n);
         }
         i++;
@@ -38,7 +39,8 @@ vector<vector<double>>read_matrix(string path){
     return matrix;
 }
 
-void print_matix(vector<vector<double>>mat){
+template<typename T>
+void print_matix(vector<vector<T>>mat){
     int dim_a=mat.size();
     int dim_b=mat[0].size();
     cout<<endl;
@@ -50,7 +52,8 @@ void print_matix(vector<vector<double>>mat){
     }
     cout<<endl;
 }
-void print_matix(basic_matrix mat){
+template<typename T>
+void print_matix(basic_matrix<T> mat){
     cout<<endl;
     for (size_t i = 0; i < mat.size_m.i; i++){
         for (size_t j = 0; j < mat.size_m.j; j++){
@@ -60,14 +63,14 @@ void print_matix(basic_matrix mat){
     }
     cout<<endl;
 }
-
-basic_matrix cast_matrix(vector<vector<double>>mat){
-    double**result=nullptr;
+template<typename T>
+basic_matrix<T> cast_matrix(vector<vector<T>>mat){
+    T**result=nullptr;
     int dim_a=mat.size();
     int dim_b=mat[0].size();
-    result=new double*[dim_a];
+    result=new T*[dim_a];
     for (size_t i = 0; i < dim_a; i++){
-        result[i]=new double[dim_b];
+        result[i]=new T[dim_b];
     }
     for (size_t i = 0; i < dim_a; i++){
         for (size_t j = 0; j < dim_b; j++){
@@ -75,21 +78,22 @@ basic_matrix cast_matrix(vector<vector<double>>mat){
         }
         
     }
-    basic_matrix r;
+    basic_matrix<T> r;
     r.matrix=result;
     r.size_m.i=dim_a;
     r.size_m.j=dim_b;
     return r;
 }
 
-double matrix_check(vector<vector<double>>mat1,basic_matrix mat2){
+template<typename T>
+T matrix_check(vector<vector<T>>mat1,basic_matrix<T> mat2){
     if(mat1.size()!=mat2.size_m.i&&mat1[0].size()!=mat2.size_m.j){
         cout<<"dimensiones incorrectas"<<endl;
         exit(1);
     }
     int dim_a=mat2.size_m.i;
     int dim_b=mat2.size_m.j;
-    double error=0;
+    T error=0;
     for (size_t i = 0; i < dim_a; i++){
         for (size_t j = 0; j < dim_b; j++){
             error+=abs(mat1[i][j])-abs(mat2.matrix[i][j]);
@@ -98,18 +102,84 @@ double matrix_check(vector<vector<double>>mat1,basic_matrix mat2){
     return error;
 }
 
-double matrix_check(vector<vector<double>>mat1,vector<vector<double>>mat2){
+template<typename T>
+T matrix_check(vector<vector<T>>mat1,vector<vector<T>>mat2){
     if(mat1.size()!=mat2.size()&&mat1[0].size()!=mat2[0].size()){
         cout<<"dimensiones incorrectas"<<endl;
         exit(1);
     }
     int dim_a=mat1.size();
     int dim_b=mat1[0].size();
-    double error=0;
+    T error=0;
     for (size_t i = 0; i < dim_a; i++){
         for (size_t j = 0; j < dim_b; j++){
             error+=abs(mat1[i][j])-abs(mat2[i][j]);
         }
     }
     return error;
+}
+
+template<typename T>
+void convert_1d_to_2d(basic_matrix<T>*mat){
+    int dim1=mat->size_m.i;
+    int dim2=mat->size_m.j;
+    T**mat2d=new T*[dim1];
+    for (size_t i = 0; i < dim1; i++){
+        mat2d[i]=new T[dim2];
+    }
+    for (size_t i = 0; i < dim1; i++){
+        for (size_t j = 0; j < dim2; j++){
+            int index=j+i*dim2;
+            T el=mat->array[index];
+            mat2d[i][j]=el;
+        }
+    }
+    mat->matrix=mat2d;
+}
+
+template<typename T>
+void convert_2d_to_1d(basic_matrix<T>*mat){
+    int dim1=mat->size_m.i;
+    int dim2=mat->size_m.j;
+    T*mat2d=new T[dim1*dim2];
+    for (size_t i = 0; i < dim1; i++){
+        for (size_t j = 0; j < dim2; j++){
+            int dim=i*(dim2)+j;
+            T el=mat->matrix[i][j];
+            mat2d[dim]=el;
+        }
+    }
+    mat->array=mat2d;
+}
+
+template<typename T>
+void convert_1d_to_2d(vector1d<T>*mat){
+    int dim1=mat->size_m.i;
+    int dim2=mat->size_m.j;
+    T**mat2d=new T*[dim1];
+    for (size_t i = 0; i < dim1; i++){
+        mat2d[i]=new T[dim2];
+    }
+    for (size_t i = 0; i < dim1; i++){
+        for (size_t j = 0; j < dim2; j++){
+            int index=j+i*dim2;
+            T el=mat->array[index];
+            mat2d[i][j]=el;
+        }
+    }
+    mat->matrix=mat2d;
+}
+template<typename T>
+vector1d<T> convert_2d_to_1d(vector<vector<T>>mat){
+    int dim_a=mat.size();
+    int dim_b=mat[0].size();
+    std::vector<T> flat_vector;
+    for (const auto& row : mat) {
+        flat_vector.insert(flat_vector.end(), row.begin(), row.end());
+    }
+    vector1d<T> res;
+    res.array=flat_vector;
+    res.size_m.i=dim_a;
+    res.size_m.j=dim_b;
+    return res;
 }

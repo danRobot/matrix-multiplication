@@ -9,15 +9,23 @@ typedef struct{
     long int i=-1;
     long int j=-1;
 } size_matrix;
-typedef struct{
-    double**matrix=nullptr;
-    double*array=nullptr;
+template<typename T>
+struct basic_matrix{
+    T**matrix=nullptr;
+    T*array=nullptr;
     size_matrix size_m;
-} basic_matrix;
-typedef struct{
-    vector<vector<double>> matrix;
-    basic_matrix matrix_array;
+};
+template<typename T>
+struct resultado{
+    vector<vector<T>> matrix;
+    basic_matrix<T> matrix_array;
     long double time=-1;
-} resultado;
+};
+template<typename T>
+struct vector1d {
+    vector<T> array;
+    size_matrix size_m;
+};
 
-#endif // MACRO
+
+#endif

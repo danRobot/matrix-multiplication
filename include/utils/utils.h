@@ -11,11 +11,21 @@
 using namespace std;
 
 vector<string> split(string& s, const string& delimiter);
-vector<vector<double>>read_matrix(string path);
-void print_matix(vector<vector<double>>mat);
-void print_matix(basic_matrix mat);
-basic_matrix cast_matrix(vector<vector<double>>mat);
-double matrix_check(vector<vector<double>>mat1,basic_matrix mat2);
-double matrix_check(vector<vector<double>>mat1,vector<vector<double>>mat2);
+template<typename T>
+vector<vector<T>>read_matrix(string path);
+template<typename T>
+void print_matix(vector<vector<T>>mat);
+template<typename T>
+void print_matix(basic_matrix<T>mat);
+template<typename T>
+basic_matrix<T>cast_matrix(vector<vector<T>>mat);
+template<typename T>
+T matrix_check(vector<vector<T>>mat1,basic_matrix<T>mat2);
+template<typename T>
+T matrix_check(vector<vector<T>>mat1,vector<vector<T>>mat2);
+template<typename T>
+void convert_1d_to_2d(basic_matrix<T>*mat);
+template<typename T>
+void convert_2d_to_1d(basic_matrix<T>*mat);
 
 #endif // MACRO
