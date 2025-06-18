@@ -16,11 +16,11 @@ set(SOURCE_UTILS_DIRECTORY src/utils)
 set(HEADER_ALGO_DIRECTORY include/algorithms)
 set(SOURCE_ALGO_DIRECTORY src/algorithms)
 
-set(SOURCES main.cpp    ${SOURCE_UTILS_DIRECTORY}/utils.cpp
+set(SOURCES main.cpp    ${SOURCE_UTILS_DIRECTORY}/utils.tpp
                         ${HEADER_UTILS_DIRECTORY}/utils.h
                         ${HEADER_UTILS_DIRECTORY}/types.h
                         
-                        ${SOURCE_ALGO_DIRECTORY}/simple.cpp
+                        ${SOURCE_ALGO_DIRECTORY}/simple.tpp
                         ${HEADER_ALGO_DIRECTORY}/simple.h)
 
 add_executable( matrix_mul ${SOURCES})

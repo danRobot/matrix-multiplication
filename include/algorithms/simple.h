@@ -15,5 +15,6 @@ resultado<T> matrix_multiplication(basic_matrix<T>a,basic_matrix<T>b);
 template<typename T>
 resultado<T> matrix_multiplication_1d(basic_matrix<T>a,basic_matrix<T>b);
 
+#include "../../src/algorithms/simple.tpp"
 
 #endif // MACRO

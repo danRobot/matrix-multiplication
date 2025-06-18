@@ -28,4 +28,6 @@ void convert_1d_to_2d(basic_matrix<T>*mat);
 template<typename T>
 void convert_2d_to_1d(basic_matrix<T>*mat);
 
+#include "../../src/utils/utils.tpp"
+
 #endif // MACRO
