@@ -13,8 +13,9 @@ resultado<T> matrix_multiplication(vector<vector<T>>a,vector<vector<T>>b){
     chrono::steady_clock::time_point begin = chrono::steady_clock::now();
     #pragma omp parallel for num_threads(20)
     for (size_t i = 0; i < dim_a; i++){
-        #pragma omp parallel for num_threads(20)
+        #pragma omp parallel for num_threads(10)
         for (size_t j = 0; j < dim_b; j++){
+            #pragma omp simd
             for (size_t k = 0; k < dim_c; k++){
                 T a_ik=a[i][k];
                 T b_kj=b[k][j];
@@ -43,9 +44,10 @@ resultado<T>matrix_multiplication_1d(vector1d<T>a,vector1d<T>b){
     chrono::steady_clock::time_point begin = chrono::steady_clock::now();
     #pragma omp parallel for num_threads(20)
     for (size_t i = 0; i < dim_a; i++){
-        #pragma omp parallel for num_threads(20)
+        #pragma omp parallel for num_threads(10)
         for (size_t j = 0; j < dim_b; j++){
             int dim=i*(dim_b)+j;
+            #pragma omp simd
             for (size_t k = 0; k < dim_c; k++){
                 int dim_a_k=i*(dim_c)+k;
                 int dim_b_k=k*(dim_b)+j;
@@ -57,9 +59,11 @@ resultado<T>matrix_multiplication_1d(vector1d<T>a,vector1d<T>b){
     }
     chrono::steady_clock::time_point end = chrono::steady_clock::now();
     resultado<T>res;
-    res.matrix=c;
+    res.matrix_1d=c;
     const std::chrono::duration<T,nano> diff = end - begin;
     res.time=diff.count();
+    res.matrix_array.size_m.i=dim_a;
+    res.matrix_array.size_m.j=dim_b;
     return res;
 }
 
@@ -81,9 +85,10 @@ resultado<T>matrix_multiplication(basic_matrix<T>a,basic_matrix<T>b){
     chrono::steady_clock::time_point begin = chrono::steady_clock::now();
     #pragma omp parallel for num_threads(20)
     for (size_t i = 0; i < dim_a; i++){
-        #pragma omp parallel for num_threads(20)
+        #pragma omp parallel for num_threads(10)
         for (size_t j = 0; j < dim_b; j++){
             c[i][j]=0;
+            #pragma omp simd
             for (size_t k = 0; k < dim_c; k++){
                 T a_ik=a.matrix[i][k];
                 T b_kj=b.matrix[k][j];
@@ -118,12 +123,13 @@ resultado<T>matrix_multiplication_1d(basic_matrix<T>a,basic_matrix<T>b){
     chrono::steady_clock::time_point begin = chrono::steady_clock::now();
     #pragma omp parallel for num_threads(20)
     for (size_t i = 0; i < dim_a; i++){
-        #pragma omp parallel for num_threads(20)
+        #pragma omp parallel for num_threads(10)
         for (size_t j = 0; j < dim_b; j++){
 
             int dim=i*(dim_b)+j;
 
             c[dim]=0;
+            #pragma omp simd
             for (size_t k = 0; k < dim_c; k++){
                 int dim_a_k=i*(dim_c)+k;
                 int dim_b_k=k*(dim_b)+j;

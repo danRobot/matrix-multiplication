@@ -153,21 +153,15 @@ void convert_2d_to_1d(basic_matrix<T>*mat){
 }
 
 template<typename T>
-void convert_1d_to_2d(vector1d<T>*mat){
-    int dim1=mat->size_m.i;
-    int dim2=mat->size_m.j;
-    T**mat2d=new T*[dim1];
+vector<vector<T>> convert_1d_to_2d(vector1d<T> mat){
+    int dim1=mat.size_m.i;
+    int dim2=mat.size_m.j;
+    vector<vector<T>> mat2d;//(dim1, std::vector<T>(dim2));
     for (size_t i = 0; i < dim1; i++){
-        mat2d[i]=new T[dim2];
+        vector<T> row(mat.array.begin() + i * dim2, mat.array.begin() + (i + 1) * dim2);
+        mat2d.push_back(row);
     }
-    for (size_t i = 0; i < dim1; i++){
-        for (size_t j = 0; j < dim2; j++){
-            int index=j+i*dim2;
-            T el=mat->array[index];
-            mat2d[i][j]=el;
-        }
-    }
-    mat->matrix=mat2d;
+    return mat2d;
 }
 template<typename T>
 vector1d<T> convert_2d_to_1d(vector<vector<T>>mat){

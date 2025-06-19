@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#define numeric double
+
 typedef struct{
     long int i=-1;
     long int j=-1;
@@ -18,6 +20,7 @@ struct basic_matrix{
 template<typename T>
 struct resultado{
     vector<vector<T>> matrix;
+    vector<T> matrix_1d;
     basic_matrix<T> matrix_array;
     long double time=-1;
 };
