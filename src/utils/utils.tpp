@@ -3,7 +3,7 @@
 
 vector<string> split(string& s, const string& delimiter) {
     vector<string> tokens;
-    size_t pos = 0;
+    int pos = 0;
     string token;
     while ((pos = s.find(delimiter)) != string::npos) {
         token = s.substr(0, pos);
@@ -44,8 +44,8 @@ void print_matix(vector<vector<T>>mat){
     int dim_a=mat.size();
     int dim_b=mat[0].size();
     cout<<endl;
-    for (size_t i = 0; i < dim_a; i++){
-        for (size_t j = 0; j < dim_b; j++){
+    for (int i = 0; i < dim_a; i++){
+        for (int j = 0; j < dim_b; j++){
             cout<<' '<<mat[i][j];
         }
         cout<<endl;
@@ -55,8 +55,8 @@ void print_matix(vector<vector<T>>mat){
 template<typename T>
 void print_matix(basic_matrix<T> mat){
     cout<<endl;
-    for (size_t i = 0; i < mat.size_m.i; i++){
-        for (size_t j = 0; j < mat.size_m.j; j++){
+    for (int i = 0; i < mat.size_m.i; i++){
+        for (int j = 0; j < mat.size_m.j; j++){
             cout<<' '<<mat.matrix[i][j];
         }
         cout<<endl;
@@ -69,11 +69,11 @@ basic_matrix<T> cast_matrix(vector<vector<T>>mat){
     int dim_a=mat.size();
     int dim_b=mat[0].size();
     result=new T*[dim_a];
-    for (size_t i = 0; i < dim_a; i++){
+    for (int i = 0; i < dim_a; i++){
         result[i]=new T[dim_b];
     }
-    for (size_t i = 0; i < dim_a; i++){
-        for (size_t j = 0; j < dim_b; j++){
+    for (int i = 0; i < dim_a; i++){
+        for (int j = 0; j < dim_b; j++){
             result[i][j]=mat[i][j];
         }
         
@@ -94,8 +94,8 @@ T matrix_check(vector<vector<T>>mat1,basic_matrix<T> mat2){
     int dim_a=mat2.size_m.i;
     int dim_b=mat2.size_m.j;
     T error=0;
-    for (size_t i = 0; i < dim_a; i++){
-        for (size_t j = 0; j < dim_b; j++){
+    for (int i = 0; i < dim_a; i++){
+        for (int j = 0; j < dim_b; j++){
             error+=abs(mat1[i][j])-abs(mat2.matrix[i][j]);
         }
     }
@@ -111,8 +111,8 @@ T matrix_check(vector<vector<T>>mat1,vector<vector<T>>mat2){
     int dim_a=mat1.size();
     int dim_b=mat1[0].size();
     T error=0;
-    for (size_t i = 0; i < dim_a; i++){
-        for (size_t j = 0; j < dim_b; j++){
+    for (int i = 0; i < dim_a; i++){
+        for (int j = 0; j < dim_b; j++){
             error+=abs(mat1[i][j])-abs(mat2[i][j]);
         }
     }
@@ -124,11 +124,11 @@ void convert_1d_to_2d(basic_matrix<T>*mat){
     int dim1=mat->size_m.i;
     int dim2=mat->size_m.j;
     T**mat2d=new T*[dim1];
-    for (size_t i = 0; i < dim1; i++){
+    for (int i = 0; i < dim1; i++){
         mat2d[i]=new T[dim2];
     }
-    for (size_t i = 0; i < dim1; i++){
-        for (size_t j = 0; j < dim2; j++){
+    for (int i = 0; i < dim1; i++){
+        for (int j = 0; j < dim2; j++){
             int index=j+i*dim2;
             T el=mat->array[index];
             mat2d[i][j]=el;
@@ -142,8 +142,8 @@ void convert_2d_to_1d(basic_matrix<T>*mat){
     int dim1=mat->size_m.i;
     int dim2=mat->size_m.j;
     T*mat2d=new T[dim1*dim2];
-    for (size_t i = 0; i < dim1; i++){
-        for (size_t j = 0; j < dim2; j++){
+    for (int i = 0; i < dim1; i++){
+        for (int j = 0; j < dim2; j++){
             int dim=i*(dim2)+j;
             T el=mat->matrix[i][j];
             mat2d[dim]=el;
@@ -157,7 +157,7 @@ vector<vector<T>> convert_1d_to_2d(vector1d<T> mat){
     int dim1=mat.size_m.i;
     int dim2=mat.size_m.j;
     vector<vector<T>> mat2d;//(dim1, std::vector<T>(dim2));
-    for (size_t i = 0; i < dim1; i++){
+    for (int i = 0; i < dim1; i++){
         vector<T> row(mat.array.begin() + i * dim2, mat.array.begin() + (i + 1) * dim2);
         mat2d.push_back(row);
     }
@@ -181,7 +181,7 @@ vector1d<T> convert_2d_to_1d(vector<vector<T>>mat){
 template<typename T>
 void clean_matrix(basic_matrix<T>*mat){
     if(mat->matrix!=nullptr){
-        for (size_t i = 0; i < mat->size_m.i; i++){
+        for (int i = 0; i < mat->size_m.i; i++){
             delete[] mat->matrix[i];
         }
         delete[] mat->matrix;
@@ -197,11 +197,12 @@ template<typename T>
 vector<vector<T>> gnererate_random_matrix(int dim_a, int dim_b) {
     random_device rd;
     mt19937 generator(rd());
-    normal_distribution<T> distribution(5.0,2.0);
-    vector<vector<T>> matrix(dim_a, vector<T>(dim_b,distribution(generator)));
+    normal_distribution distribution(5.0,2.0);
+    vector<vector<T>> matrix(dim_a, vector<T>(dim_b,0));
     for (int i = 0; i < dim_a; ++i) {
         for (int j = 0; j < dim_b; ++j) {
-            matrix[i][j] = distribution(generator);//static_cast<T>(rand() % 100); // Random values between 0 and 99
+            auto element = distribution(generator);
+            matrix[i][j] = static_cast<T>(element);//static_cast<T>(rand() % 100); // Random values between 0 and 99
         }
     }
     return matrix;
