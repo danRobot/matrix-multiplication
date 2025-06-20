@@ -50,7 +50,7 @@ resultado_step matrix_test(int dim1,int dim2,int dim3){
 }
 
 int main(){
-    vector<vector<int>> dimensiones=read_matrix<int>("dims_test.txt");
+    vector<vector<numeric>> dimensiones=read_matrix<numeric>("dims_test.txt");
     ofstream outputFile("output.csv");
     if (!outputFile.is_open()) {
         cerr << "Error opening output file." <<strerror(errno) << endl;
@@ -60,7 +60,8 @@ int main(){
     outputFile << "dim,raw_array,vector_class" << endl;
     for (const auto& row : dimensiones) {
         for (const auto& elem : row) {
-            result=matrix_test(elem ,elem,elem);
+            int dim_test=(int)elem;
+            result=matrix_test(dim_test ,dim_test,dim_test);
             outputFile << elem<<","<< result.time_0 << "," << result.time_1 << endl;
             cout<<result.time_0<<" "<<result.time_1<<" "<<endl;
         }
