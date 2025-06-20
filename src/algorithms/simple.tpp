@@ -52,7 +52,7 @@ resultado<T>matrix_multiplication_1d(vector1d<T>a,vector1d<T>b){
             #pragma omp simd reduction(+:sum)
             for (int k = 0; k < dim_c; k++){
                 int dim_a_k=i*(dim_c)+k;
-                int dim_b_k=k*(dim_b)+j;
+                int dim_b_k=k+(dim_b)*j;
                 T a_ik=a.array[dim_a_k];
                 T b_kj=b.array[dim_b_k];
                 sum+=a_ik*b_kj;
@@ -134,7 +134,7 @@ resultado<T>matrix_multiplication_1d(basic_matrix<T>a,basic_matrix<T>b){
             #pragma omp simd reduction(+:sum)
             for (int k = 0; k < dim_c; k++){
                 int dim_a_k=i*(dim_c)+k;
-                int dim_b_k=k*(dim_b)+j;
+                int dim_b_k=k+(dim_b)*j;
                 T a_ik=a.array[dim_a_k];
                 T b_kj=b.array[dim_b_k];
                 sum+=a_ik*b_kj;

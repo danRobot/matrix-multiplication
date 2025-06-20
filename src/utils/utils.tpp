@@ -3,7 +3,7 @@
 
 vector<string> split(string& s, const string& delimiter) {
     vector<string> tokens;
-    int pos = 0;
+    long unsigned int pos = 0;
     string token;
     while ((pos = s.find(delimiter)) != string::npos) {
         token = s.substr(0, pos);
@@ -203,6 +203,18 @@ vector<vector<T>> gnererate_random_matrix(int dim_a, int dim_b) {
         for (int j = 0; j < dim_b; ++j) {
             auto element = distribution(generator);
             matrix[i][j] = static_cast<T>(element);//static_cast<T>(rand() % 100); // Random values between 0 and 99
+        }
+    }
+    return matrix;
+}
+template<typename T>
+vector<vector<T>> transpose_matrix(vector<vector<T>> mat) {
+    int dim_a=mat.size();
+    int dim_b=mat[0].size();
+    vector<vector<T>> matrix(dim_b, vector<T>(dim_a));
+    for (int i = 0; i < dim_a; ++i) {
+        for (int j = 0; j < dim_b; ++j) {
+            matrix[i][j] = mat[j][i]; // Transpose the element
         }
     }
     return matrix;

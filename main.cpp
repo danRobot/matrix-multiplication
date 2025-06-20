@@ -19,10 +19,15 @@ resultado_step matrix_test(int dim1,int dim2,int dim3){
 
     basic_matrix<numeric>basic_a;
     basic_matrix<numeric>basic_b;
+    basic_matrix<numeric>basic_b_t;
+    vector<vector<numeric>>matrix_b_t=transpose_matrix(matrix_b);
+    vector1d<numeric> matrix_b1d_t=convert_2d_to_1d(matrix_b_t);
     basic_a=cast_matrix(matrix_a);
     basic_b=cast_matrix(matrix_b);
+    basic_b_t=cast_matrix(matrix_b_t);
     convert_2d_to_1d(&basic_a);
     convert_2d_to_1d(&basic_b);
+    convert_2d_to_1d(&basic_b_t);
 
     //print_matix(basic_c);
 
@@ -31,8 +36,8 @@ resultado_step matrix_test(int dim1,int dim2,int dim3){
     cout<<matrix_a[0].size()<<endl;
     resultado r1=matrix_multiplication(matrix_a,matrix_b);
     resultado r2=matrix_multiplication(basic_a,basic_b);
-    resultado r3=matrix_multiplication_1d(basic_a,basic_b);
-    resultado r4=matrix_multiplication_1d(matrix_a1d,matrix_b1d);
+    resultado r3=matrix_multiplication_1d(basic_a,basic_b_t);
+    resultado r4=matrix_multiplication_1d(matrix_a1d,matrix_b1d_t);
     double seg=1E9;
     resultado_step result;
     result.time_0=r1.time/seg;
