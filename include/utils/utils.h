@@ -7,6 +7,7 @@
 #include <vector>
 #include <chrono>
 #include "types.h"
+#include <random>
 
 using namespace std;
 

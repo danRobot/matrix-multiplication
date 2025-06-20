@@ -177,3 +177,32 @@ vector1d<T> convert_2d_to_1d(vector<vector<T>>mat){
     res.size_m.j=dim_b;
     return res;
 }
+
+template<typename T>
+void clean_matrix(basic_matrix<T>*mat){
+    if(mat->matrix!=nullptr){
+        for (size_t i = 0; i < mat->size_m.i; i++){
+            delete[] mat->matrix[i];
+        }
+        delete[] mat->matrix;
+        mat->matrix=nullptr;
+    }
+    if(mat->array!=nullptr){
+        delete[] mat->array;
+        mat->array=nullptr;
+    }
+}
+
+template<typename T>
+vector<vector<T>> gnererate_random_matrix(int dim_a, int dim_b) {
+    random_device rd;
+    mt19937 generator(rd());
+    normal_distribution<T> distribution(5.0,2.0);
+    vector<vector<T>> matrix(dim_a, vector<T>(dim_b,distribution(generator)));
+    for (int i = 0; i < dim_a; ++i) {
+        for (int j = 0; j < dim_b; ++j) {
+            matrix[i][j] = distribution(generator);//static_cast<T>(rand() % 100); // Random values between 0 and 99
+        }
+    }
+    return matrix;
+}

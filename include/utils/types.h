@@ -29,6 +29,13 @@ struct vector1d {
     vector<T> array;
     size_matrix size_m;
 };
+struct resultado_step{
+    long double time_0=-1;
+    long double time_1=-1;
+    long double time_2=-1;
+    long double time_3=-1;
+};
+
 
 
 #endif
