@@ -51,7 +51,7 @@ resultado_step matrix_test(int dim1,int dim2,int dim3){
 }
 
 int main(){
-    int dims[]={5000};
+    int dims[]={3000};
     ofstream outputFile("../output.csv");
     if (!outputFile.is_open()) {
         cerr << "Error opening output file." <<strerror(errno) << endl;
