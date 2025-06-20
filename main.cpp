@@ -34,21 +34,15 @@ resultado_step matrix_test(int dim1,int dim2,int dim3){
    // exit(0);
     cout<<matrix_a.size()<<endl;
     cout<<matrix_a[0].size()<<endl;
-    resultado r1=matrix_multiplication(matrix_a,matrix_b);
-    resultado r2=matrix_multiplication(basic_a,basic_b);
     resultado r3=matrix_multiplication_1d(basic_a,basic_b_t);
     resultado r4=matrix_multiplication_1d(matrix_a1d,matrix_b1d_t);
     double seg=1E9;
     resultado_step result;
-    result.time_0=r1.time/seg;
-    result.time_1=r2.time/seg;
     result.time_2=r3.time/seg;
     result.time_3=r4.time/seg;
     
     clean_matrix(&basic_a);
     clean_matrix(&basic_b);
-    clean_matrix(&r1.matrix_array);
-    clean_matrix(&r2.matrix_array);
     clean_matrix(&r3.matrix_array);
     clean_matrix(&r4.matrix_array);
     
@@ -56,8 +50,8 @@ resultado_step matrix_test(int dim1,int dim2,int dim3){
 }
 
 int main(){
-    int dims[]={2000};
-    ofstream outputFile("../output.csv");
+    int dims[]={5000};
+    ofstream outputFile("output.csv");
     if (!outputFile.is_open()) {
         cerr << "Error opening output file." <<strerror(errno) << endl;
         return 1;

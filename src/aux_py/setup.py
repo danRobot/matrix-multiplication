@@ -1,10 +1,13 @@
 import numpy as np
 import time as t
 
-mat_a=np.random.randn(2899,2715)*10
-#mat_a=mat_a.astype(np.int64)
-mat_b=np.random.randn(2715,2512)*10
-#mat_b=mat_b.astype(np.int64)
+dim1=np.random.randint(300, 500)
+dim2=np.random.randint(300, 500)
+dim3=np.random.randint(300, 500)
+mat_a=np.random.randn(dim1,dim2)*10
+mat_a=mat_a.astype(np.int64)
+mat_b=np.random.randn(dim2,dim3)*10
+mat_b=mat_b.astype(np.int64)
 start=t.time()
 mat_c=np.matmul(mat_a,mat_b)
 end=t.time()

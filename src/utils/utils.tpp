@@ -86,6 +86,23 @@ basic_matrix<T> cast_matrix(vector<vector<T>>mat){
 }
 
 template<typename T>
+vector<vector<T>> cast_matrix(basic_matrix<T>mat){
+    vector<vector<T>>result;
+    int dim_a=mat.size_m.i;
+    int dim_b=mat.size_m.j;
+    if(mat.matrix==nullptr){
+        convert_1d_to_2d(&mat);
+    }
+    result.resize(dim_a, vector<T>(dim_b));
+    for (int i = 0; i < dim_a; i++){
+        for (int j = 0; j < dim_b; j++){
+            result[i][j]=mat.matrix[i][j];
+        }
+    }
+    return result;
+}
+
+template<typename T>
 T matrix_check(vector<vector<T>>mat1,basic_matrix<T> mat2){
     if(mat1.size()!=mat2.size_m.i&&mat1[0].size()!=mat2.size_m.j){
         cout<<"dimensiones incorrectas"<<endl;
@@ -214,7 +231,7 @@ vector<vector<T>> transpose_matrix(vector<vector<T>> mat) {
     vector<vector<T>> matrix(dim_b, vector<T>(dim_a));
     for (int i = 0; i < dim_a; ++i) {
         for (int j = 0; j < dim_b; ++j) {
-            matrix[i][j] = mat[j][i]; // Transpose the element
+            matrix[j][i] = mat[i][j]; // Transpose the element
         }
     }
     return matrix;

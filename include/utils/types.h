@@ -18,16 +18,16 @@ struct basic_matrix{
     size_matrix size_m;
 };
 template<typename T>
-struct resultado{
-    vector<vector<T>> matrix;
-    vector<T> matrix_1d;
-    basic_matrix<T> matrix_array;
-    long double time=-1;
-};
-template<typename T>
 struct vector1d {
     vector<T> array;
     size_matrix size_m;
+};
+template<typename T>
+struct resultado{
+    vector<vector<T>> matrix;
+    vector1d<T> matrix_1d;
+    basic_matrix<T> matrix_array;
+    long double time=-1;
 };
 struct resultado_step{
     long double time_0=-1;
