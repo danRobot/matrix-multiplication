@@ -38,8 +38,8 @@ resultado_step matrix_test(int dim1,int dim2,int dim3){
     resultado r4=matrix_multiplication_1d(matrix_a1d,matrix_b1d_t);
     double seg=1E9;
     resultado_step result;
-    result.time_2=r3.time/seg;
-    result.time_3=r4.time/seg;
+    result.time_0=r3.time/seg;
+    result.time_1=r4.time/seg;
     
     clean_matrix(&basic_a);
     clean_matrix(&basic_b);
@@ -50,19 +50,21 @@ resultado_step matrix_test(int dim1,int dim2,int dim3){
 }
 
 int main(){
-    int dims[]={5000};
+    vector<vector<int>> dimensiones=read_matrix<int>("dims_test.txt");
     ofstream outputFile("output.csv");
     if (!outputFile.is_open()) {
         cerr << "Error opening output file." <<strerror(errno) << endl;
         return 1;
     }
     resultado_step result;
-    outputFile << "dim,matmul_vect,matmul_array,matmul_1d,matmul_1d_vect" << endl;
-    for (size_t i = 0; i < sizeof(dims) / sizeof(dims[0]); i++){
-        result=matrix_test(dims[i] ,dims[i],dims[i]);
-        outputFile << dims[i]<<","<< result.time_0 << "," << result.time_1 << ","
-                   << result.time_2 << "," << result.time_3 << endl;
-        cout<<result.time_1<<" "<<result.time_2<<" "<<result.time_3<<endl;
+    outputFile << "dim,raw_array,vector_class" << endl;
+    for (const auto& row : dimensiones) {
+        for (const auto& elem : row) {
+            result=matrix_test(elem ,elem,elem);
+            outputFile << elem<<","<< result.time_0 << "," << result.time_1 << endl;
+            cout<<result.time_0<<" "<<result.time_1<<" "<<endl;
+        }
+        cout << endl;
     }
     outputFile.close();
     return 0;
