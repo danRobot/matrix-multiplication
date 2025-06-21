@@ -43,8 +43,9 @@ resultado_step matrix_test(int dim1,int dim2,int dim3){
     
     clean_matrix(&basic_a);
     clean_matrix(&basic_b);
+    clean_matrix(&basic_b_t);
     clean_matrix(&r3.matrix_array);
-    clean_matrix(&r4.matrix_array);
+    //clean_matrix(&r4.matrix_array);
     
     return result;
 }
@@ -60,7 +61,17 @@ int main(){
     outputFile << "dim,raw_array,vector_class" << endl;
     for (const auto& row : dimensiones) {
         for (const auto& elem : row) {
-            result=matrix_test(elem ,elem,elem);
+            long double time_0=0;
+            long double time_1=0;
+            for (size_t i = 0; i < 5; i++){
+                result=matrix_test(elem ,elem,elem);
+                time_0+=result.time_0;
+                time_1+=result.time_1;
+            }
+            time_0/=5;
+            time_1/=5;
+            result.time_0=time_0;
+            result.time_1=time_1;
             outputFile << elem<<","<< result.time_0 << "," << result.time_1 << endl;
             cout<<result.time_0<<" "<<result.time_1<<" "<<endl;
         }
